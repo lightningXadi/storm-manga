@@ -1,2 +1,3 @@
-// Future enhancements can go here
-console.log('Storm Manga site loaded!');
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Storm Manga Website Loaded Successfully!");
+});
