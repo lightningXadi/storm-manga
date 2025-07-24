@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(#0d001a, #1c0033);
+  color: #fff;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+header {
+  background-color: #12002f;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 0 10px #cc00ff55;
+}
+
+.logo {
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px #cc00ff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav ul li a {
+  color: #aaa;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #fff;
+  text-shadow: 0 0 10px #cc00ff;
+}
+
+.hero {
+  padding: 5rem 2rem;
+  background: url('../assets/images/bg.jpg') no-repeat center center/cover;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  color: #cc00ff;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background: #cc00ff;
+  color: #fff;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 0 20px #cc00ff;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #a200cc;
+}
+
+.section-title {
+  text-align: center;
+  color: #cc00ff;
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+.card-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #1e0033;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 250px;
+  box-shadow: 0 0 15px #cc00ff22;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card-info h4 {
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.read-btn {
+  background: #cc00ff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 0 10px #cc00ff;
+  transition: 0.3s;
+}
+
+.read-btn:hover {
+  background: #a200cc;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #12002f;
+  color: #999;
+}
