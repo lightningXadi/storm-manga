@@ -40,7 +40,7 @@ header {
   box-shadow: 0 0 20px #9b5dfc88;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .logo {
@@ -66,41 +66,42 @@ nav ul li a:hover {
   text-shadow: 0 0 10px #d946ef;
 }
 
-/* ✅ Hero Section with Banner and Text Overlay */
-.hero-banner {
-  position: relative;
+/* ✅ Banner style */
+.banner {
   width: 100%;
-  max-height: 600px;
   overflow: hidden;
+  margin-top: 0;
 }
 
-.hero-banner img {
+.banner img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
-  filter: brightness(70%);
+  z-index: 2;
+  position: relative;
+  box-shadow: 0 0 40px #9333ea;
+  margin-bottom: -10px;
 }
 
-.hero-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.hero {
   text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  background: rgba(10, 0, 26, 0.6);
+  z-index: 3;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 3rem;
   color: #f0abfc;
   text-shadow: 0 0 25px #c084fc;
-  padding: 1rem;
-  z-index: 2;
 }
 
-.hero-text h1 {
-  font-size: 3rem;
-}
-
-.hero-text p {
-  font-size: 1.2rem;
+.hero p {
   margin-top: 1rem;
+  font-size: 1.2rem;
   color: #ddd;
 }
 
@@ -111,68 +112,4 @@ nav ul li a:hover {
   background: #8b5cf6;
   color: white;
   border: none;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 0 20px #9333ea;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #7c3aed;
-  box-shadow: 0 0 30px #a855f7;
-}
-
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: rgba(20, 0, 36, 0.9);
-  color: #ccc;
-  font-size: 0.8rem;
-  margin-top: 3rem;
-}
-
-.section-title {
-  font-size: 2rem;
-  color: #d946ef;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.card {
-  background: #1a0f2f;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #5b21b6;
-}
-
-.card h3 {
-  color: #fff;
-}
-
-.card p {
-  color: #ccc;
-  font-size: 0.95rem;
-}
-
-@media(max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1rem;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-
-  .hero-text p {
-    font-size: 1rem;
-  }
-}
+  border-radius
