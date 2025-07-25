@@ -8,6 +8,11 @@
 
 body {
   font-family: 'Orbitron', sans-serif;
+  background-image: url("bg.jpg"); /* ✅ Background added */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-color: #0a001a; /* fallback color */
   color: #fff;
   overflow-x: hidden;
@@ -59,34 +64,9 @@ nav ul li a:hover {
   text-shadow: 0 0 10px #d946ef;
 }
 
-/* Hero section with background image */
 .hero {
-  background-image: url('bp.png'); /* Your image in GitHub repo */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 0, 26, 0.6); /* overlay on image */
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 2rem;
+  padding-top: 3rem;
 }
 
 .hero h1 {
@@ -162,13 +142,5 @@ footer {
   header {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
   }
 }
