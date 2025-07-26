@@ -70,11 +70,15 @@ nav ul li a:hover {
 
 /* Hamburger Menu */
 .menu-toggle {
-  display: none;
-  font-size: 1.8rem;
+  position: absolute;
+  top: 1.2rem;   /* Distance from top */
+  right: 1.5rem; /* Distance from right */
+  font-size: 2rem;
   color: #a855f7;
   cursor: pointer;
+  z-index: 1000;
 }
+
 
 .hero {
   text-align: center;
