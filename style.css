@@ -173,6 +173,10 @@ footer {
   color: white;
   box-shadow: 0 0 25px #7c3aed;
 }
+.menu-toggle {
+  display: none;
+}
+
 
 
 /* Animation */
