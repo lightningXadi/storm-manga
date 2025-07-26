@@ -70,6 +70,7 @@ nav ul li a:hover {
 
 /* Hamburger Menu */
 .menu-toggle {
+  display: none; 
   position: absolute;
   top: 1.2rem;   /* Distance from top */
   right: 1.5rem; /* Distance from right */
