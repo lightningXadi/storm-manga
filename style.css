@@ -68,28 +68,36 @@ nav ul li a:hover {
   text-shadow: 0 0 10px #d946ef;
 }
 
-.hero {
-  text-align: center;
-  padding-top: 3rem;
+/* Hamburger Menu */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #a855f7;
+  cursor: pointer;
 }
 
-/* 🟣 Image container with overlay text */
+.hero {
+  text-align: center;
+  padding-top: 2rem;
+}
+
 .hero-overlay {
   position: relative;
-  display: inline-block;
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
+  margin: 0 auto;
 }
 
 .hero-image {
   width: 100%;
   height: auto;
+  min-height: 300px;
+  object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 0 40px #9333ea;
   display: block;
 }
 
-/* 🟣 Text over image */
 .hero-text {
   position: absolute;
   top: 50%;
@@ -98,10 +106,12 @@ nav ul li a:hover {
   text-align: center;
   color: #fff;
   padding: 1.5rem;
-  background: rgba(20, 0, 40, 0.5);
+  background: rgba(20, 0, 40, 0.7);
+  backdrop-filter: blur(6px);
   border-radius: 15px;
   box-shadow: 0 0 20px #9333ea88;
   width: 90%;
+  animation: fadeInUp 1s ease-out forwards;
 }
 
 .hero-text h1 {
@@ -143,51 +153,47 @@ footer {
   margin-top: 3rem;
 }
 
-.section-title {
-  font-size: 2rem;
-  color: #d946ef;
-  margin-bottom: 1.5rem;
-  text-align: center;
+/* Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
-.card {
-  background: #1a0f2f;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #5b21b6;
-}
-
-.card h3 {
-  color: #fff;
-}
-
-.card p {
-  color: #ccc;
-  font-size: 0.95rem;
-}
-
-/* ✅ Responsive Fixes */
+/* Responsive */
 @media(max-width: 768px) {
   header {
     flex-direction: column;
     align-items: center;
   }
 
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   nav ul {
     flex-direction: column;
     gap: 0.8rem;
-    margin-top: 1rem;
     align-items: center;
   }
 
-  .logo {
-    font-size: 1.5rem;
+  nav.active {
+    display: block;
   }
 
   .hero-text h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .hero-text p {
@@ -197,5 +203,9 @@ footer {
   .btn {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
+  }
+
+  .hero {
+    padding-top: 1rem;
   }
 }
