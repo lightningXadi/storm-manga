@@ -4,15 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>⚡ Storm Manga</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- ✅ SEO and Meta Tags -->
+  <meta name="description" content="Storm Manga is the futuristic platform to read, publish, and connect through anime-style stories. Join the storm today!">
+  <meta name="keywords" content="Manga, Publish Manga, Read Manga, Anime, Storm Manga, Online Comics">
+  <meta name="author" content="Storm Manga Team">
+  <link rel="icon" href="favicon.png" type="image/png"> <!-- If favicon is also in root -->
 </head>
 <body>
 
   <header>
     <div class="logo">⚡ Storm Manga</div>
-    <div class="menu-toggle" id="menu-toggle">☰</div>
-    <nav id="nav-menu">
+    <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="read.html">Read</a></li>
@@ -26,14 +30,12 @@
 
   <div class="page active-page">
     <div class="hero">
-      <div class="hero-overlay">
-        <img src="bp.png" alt="Storm Manga Banner" class="hero-image">
-        <div class="hero-text">
-          <h1>Welcome to the Future of Manga</h1>
-          <p>Read. Publish. Connect. Be part of the storm.</p>
-          <a href="read.html" class="btn">📖 Start Reading</a>
-        </div>
-      </div>
+      <!-- ✅ Correct image path since bp.png is in root -->
+      <img src="bp.png" alt="Storm Manga Banner" class="hero-image">
+      
+      <h1>Welcome to the Future of Manga</h1>
+      <p>Read. Publish. Connect. Be part of the storm.</p>
+      <a href="read.html" class="btn">📖 Start Reading</a>
     </div>
   </div>
 
@@ -41,5 +43,6 @@
     © 2025 Storm Manga. Made with ⚡ and neon.
   </footer>
 
+  <script src="script.js"></script> <!-- ✅ Script remains at the end -->
 </body>
 </html>
