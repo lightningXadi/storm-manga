@@ -19,7 +19,7 @@
       flex-direction: column;
       align-items: center;
       padding: 1rem 0;
-      margin-bottom: 20px; /* Extra space at bottom */
+      margin-bottom: 20px;
     }
 
     .manga-pages img {
@@ -75,23 +75,33 @@
     }
 
     .nav-menu-btn {
-      padding: 10px 20px;
+      padding: 12px;
       background: rgba(20, 0, 40, 0.7);
       color: #c084fc;
-      border-radius: 50px;
+      border-radius: 50%;
       text-decoration: none;
       transition: all 0.3s ease;
-      margin: 0 5px;
       backdrop-filter: blur(5px);
       position: fixed;
       top: 80px;
       right: 20px;
       z-index: 101;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .nav-menu-btn:hover {
       background: #8b5cf6;
       color: white;
+      transform: scale(1.1);
+    }
+
+    .nav-menu-btn span {
+      display: none; /* Hide text by default */
     }
 
     .chapter-nav-btn i {
@@ -100,7 +110,7 @@
 
     .chapter-title {
       text-align: center;
-      margin: 40px 0 20px 0; /* More top margin */
+      margin: 40px 0 20px 0;
       font-size: 1.8rem;
       color: #c084fc;
       text-shadow: 0 0 15px #a855f7;
@@ -165,19 +175,26 @@
       z-index: 101;
     }
 
+    @media (min-width: 769px) {
+      .nav-menu-btn {
+        border-radius: 50px;
+        width: auto;
+        padding: 10px 20px;
+      }
+      .nav-menu-btn span {
+        display: inline; /* Show text on desktop */
+        margin-left: 8px;
+      }
+    }
+
     @media (max-width: 768px) {
       .manga-container {
-        padding-bottom: 120px; /* More space on mobile */
+        padding-bottom: 120px;
       }
       
       .nav-menu-container {
         top: 70px;
         right: 10px;
-      }
-      
-      .nav-menu-btn {
-        padding: 8px 15px;
-        font-size: 0.9rem;
       }
       
       .chapter-nav {
@@ -210,11 +227,11 @@
     </a>
     
     <div class="nav-menu-container">
-      <a href="index.html" class="nav-menu-btn">
+      <a href="index.html" class="nav-menu-btn" title="Home">
         <i class="fas fa-home"></i>
         <span>Home</span>
       </a>
-      <a href="read.html" class="nav-menu-btn">
+      <a href="read.html" class="nav-menu-btn" title="Read">
         <i class="fas fa-book-open"></i>
         <span>Read</span>
       </a>
