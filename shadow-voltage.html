@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chapters | Storm Manga</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
@@ -34,7 +33,9 @@
 
     document.getElementById("manga-title").innerText = `${manga.replace(/-/g, ' ')} - Chapters`;
 
-    const totalChapters = 10; // You can increase this based on your folders
+    // This would ideally come from an API or config file
+    // For now we'll assume each manga has 20 chapters
+    const totalChapters = 20;
 
     const listContainer = document.getElementById("chapter-list");
     for (let i = totalChapters; i >= 1; i--) {
