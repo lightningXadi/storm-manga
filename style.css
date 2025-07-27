@@ -237,3 +237,11 @@ footer {
     padding-top: 1rem;
   }
 }
+/* Makes manga links look like plain text (but clickable) */
+.manga-link {
+  color: inherit; /* Keeps the purple color */
+  text-decoration: none; /* Removes underline */
+}
+.manga-link:hover {
+  text-shadow: 0 0 10px #d946ef; /* Adds glow effect on hover */
+}
