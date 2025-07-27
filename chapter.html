@@ -86,117 +86,108 @@
   </footer>
 
   <script>
-    // Get URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const manga = params.get("manga");
-    const chapter = params.get("chapter");
+    document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.getElementById("manga-pages");
+  const chapterTitle = document.getElementById("chapter-title");
+  const prevBtn = document.getElementById("prev-chapter");
+  const nextBtn = document.getElementById("next-chapter");
 
-    // Elements
-    const title = document.getElementById("chapter-title");
-    const container = document.getElementById("manga-pages");
-    const prevChapter = document.getElementById("prev-chapter");
-    const nextChapter = document.getElementById("next-chapter");
-    const prevChapterBottom = document.getElementById("prev-chapter-bottom");
-    const nextChapterBottom = document.getElementById("next-chapter-bottom");
-    const mangaList = document.getElementById("manga-list");
-    const mangaListBottom = document.getElementById("manga-list-bottom");
+  if (!container || !chapterTitle) return;
 
-    // Set manga list links
-    if (manga) {
-      mangaList.href = `shadow-voltage.html?manga=${manga}`;
-      mangaListBottom.href = `shadow-voltage.html?manga=${manga}`;
-    }
+  // Get URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const manga = urlParams.get("manga"); // e.g., "solo-leveling"
+  const chapter = urlParams.get("chapter"); // e.g., "1" or "ch-1"
 
-    // Validate parameters
-    if (!manga || !chapter) {
-      title.textContent = "Invalid Chapter";
-      container.innerHTML = "<p>Please select a valid chapter from the manga list.</p>";
-      return;
-    }
+  if (!manga || !chapter) {
+    container.innerHTML = "<p>Invalid chapter link</p>";
+    return;
+  }
 
-    // Format title
-    title.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - Chapter ${chapter.replace('ch-', '')}`;
+  // Format title
+  const chapterNum = chapter.startsWith('ch-') ? chapter.replace('ch-', '') : chapter;
+  chapterTitle.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - Chapter ${chapterNum}`;
 
-    // Load images dynamically
-    async function loadChapterPages() {
-      container.innerHTML = '<div class="loading">Loading pages...</div>';
+  // Image loading parameters
+  const maxTryPages = 200;
+  const maxMisses = 5;
+  let missCount = 0;
+  let currentPage = 1;
+  let hasPages = false;
+
+  // Function to check if image exists
+  const checkImageExists = (url) => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url;
+    });
+  };
+
+  // Load pages dynamically
+  async function loadPages() {
+    container.innerHTML = '<div class="loading">Loading pages...</div>';
+    
+    while (missCount < maxMisses && currentPage <= maxTryPages) {
+      const pageNum = String(currentPage).padStart(4, "0");
+      // Updated path construction to match your structure
+      const imgUrl = `manga/${manga}/ch-${chapterNum}/Sololeveling_102_page-${pageNum}.jpg`;
+
+      const exists = await checkImageExists(imgUrl);
       
-      let pageNumber = 1;
-      let hasPages = false;
-      const maxAttempts = 5; // Stop after 5 consecutive missing pages
-      let missingCount = 0;
-
-      while (missingCount < maxAttempts) {
-        const formattedPage = pageNumber.toString().padStart(4, '0');
-        const imgPath = `manga/${manga}/${chapter}/Sololeveling_102_page-${formattedPage}.jpg`;
-        
-        try {
-          const exists = await checkImageExists(imgPath);
-          if (exists) {
-            const img = document.createElement("img");
-            img.src = imgPath;
-            img.alt = `Page ${pageNumber}`;
-            img.loading = "lazy";
-            
-            if (!hasPages) {
-              container.innerHTML = '';
-              hasPages = true;
-            }
-            
-            container.appendChild(img);
-            missingCount = 0; // Reset missing counter
-          } else {
-            missingCount++;
-          }
-        } catch (error) {
-          missingCount++;
-          console.error(`Error loading page ${pageNumber}:`, error);
+      if (exists) {
+        if (!hasPages) {
+          container.innerHTML = '';
+          hasPages = true;
         }
         
-        pageNumber++;
-      }
-
-      if (!hasPages) {
-        container.innerHTML = '<p>No pages found for this chapter.</p>';
-      }
-    }
-
-    // Helper function to check if image exists
-    function checkImageExists(url) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = url;
-      });
-    }
-
-    // Set up navigation
-    function setupNavigation() {
-      const currentChapterNum = parseInt(chapter.replace('ch-', ''));
-      const prevChapterNum = currentChapterNum - 1;
-      const nextChapterNum = currentChapterNum + 1;
-
-      // Previous chapter
-      if (prevChapterNum > 0) {
-        prevChapter.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
-        prevChapterBottom.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
+        const pageDiv = document.createElement("div");
+        pageDiv.className = "manga-page";
+        
+        const img = document.createElement("img");
+        img.src = imgUrl;
+        img.alt = `Page ${currentPage}`;
+        img.loading = "lazy";
+        
+        pageDiv.appendChild(img);
+        container.appendChild(pageDiv);
+        
+        missCount = 0;
       } else {
-        prevChapter.classList.add('disabled');
-        prevChapterBottom.classList.add('disabled');
-        prevChapter.textContent = "No Previous Chapter";
-        prevChapterBottom.textContent = "No Previous Chapter";
+        missCount++;
       }
-
-      // Next chapter
-      // In a real app, you might want to check if next chapter exists
-      nextChapter.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
-      nextChapterBottom.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
+      
+      currentPage++;
     }
 
-    // Initialize
-    loadChapterPages();
-    setupNavigation();
+    if (!hasPages) {
+      container.innerHTML = '<p>No pages found for this chapter.</p>';
+    }
+  }
+
+  // Set up navigation
+  function setupNavigation() {
+    const currentChapterNum = parseInt(chapterNum);
+    const prevChapterNum = currentChapterNum - 1;
+    const nextChapterNum = currentChapterNum + 1;
+
+    // Previous chapter
+    if (prevChapterNum > 0) {
+      prevBtn.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
+    } else {
+      prevBtn.classList.add('disabled');
+      prevBtn.textContent = "No Previous Chapter";
+    }
+
+    // Next chapter
+    nextBtn.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
+  }
+
+  // Initialize
+  await loadPages();
+  setupNavigation();
+});
   </script>
 </body>
 </html>
