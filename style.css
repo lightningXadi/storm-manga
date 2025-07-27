@@ -177,7 +177,53 @@ footer {
 .menu-toggle {
   display: none;
 }
+/* ======================== */
+/* MANGA READER STYLES      */
+/* ======================== */
+.manga-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+.manga-page {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.manga-page img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(123, 31, 162, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.manga-page img:hover {
+  transform: scale(1.02);
+}
+
+.chapter-title {
+  color: #c084fc;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #a855f7;
+}
+
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+/* Loading state (optional) */
+.manga-page.loading {
+  min-height: 100vh;
+  background: rgba(20, 0, 40, 0.7) url('loading-spinner.svg') no-repeat center;
+}
+
+/* Continue with your existing @media queries below... */
+@media(max-width: 768px) {
 
 
 /* Animation */
