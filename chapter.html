@@ -19,6 +19,40 @@
       box-shadow: 0 0 15px #00f0ff44;
       border-radius: 12px;
     }
+
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      margin: 20px auto;
+      padding: 10px 0;
+    }
+
+    .chapter-nav a {
+      padding: 10px 20px;
+      background: #333;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .chapter-nav a:hover {
+      background: #555;
+    }
+
+    .chapter-nav a.disabled {
+      background: #999;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #777;
+    }
   </style>
 </head>
 <body>
@@ -34,7 +68,17 @@
 
   <main>
     <h1 id="chapter-title" style="text-align: center;">Loading...</h1>
+    <div class="chapter-nav">
+      <a id="prev-chapter" href="#">Previous Chapter</a>
+      <a id="manga-list" href="#">Manga List</a>
+      <a id="next-chapter" href="#">Next Chapter</a>
+    </div>
     <div class="manga-pages" id="manga-pages"></div>
+    <div class="chapter-nav">
+      <a id="prev-chapter-bottom" href="#">Previous Chapter</a>
+      <a id="manga-list-bottom" href="#">Manga List</a>
+      <a id="next-chapter-bottom" href="#">Next Chapter</a>
+    </div>
   </main>
 
   <footer>
@@ -42,35 +86,117 @@
   </footer>
 
   <script>
+    // Get URL parameters
     const params = new URLSearchParams(window.location.search);
     const manga = params.get("manga");
     const chapter = params.get("chapter");
 
+    // Elements
     const title = document.getElementById("chapter-title");
     const container = document.getElementById("manga-pages");
+    const prevChapter = document.getElementById("prev-chapter");
+    const nextChapter = document.getElementById("next-chapter");
+    const prevChapterBottom = document.getElementById("prev-chapter-bottom");
+    const nextChapterBottom = document.getElementById("next-chapter-bottom");
+    const mangaList = document.getElementById("manga-list");
+    const mangaListBottom = document.getElementById("manga-list-bottom");
 
+    // Set manga list links
+    if (manga) {
+      mangaList.href = `shadow-voltage.html?manga=${manga}`;
+      mangaListBottom.href = `shadow-voltage.html?manga=${manga}`;
+    }
+
+    // Validate parameters
     if (!manga || !chapter) {
       title.textContent = "Invalid Chapter";
-    } else {
-      title.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - ${chapter.toUpperCase()}`;
+      container.innerHTML = "<p>Please select a valid chapter from the manga list.</p>";
+      return;
+    }
 
-      // You can customize image count as per your folders
-      const totalImages = 10; // 👈 Change based on max pages per chapter
+    // Format title
+    title.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - Chapter ${chapter.replace('ch-', '')}`;
 
-      for (let i = 1; i <= totalImages; i++) {
-        const img = document.createElement("img");
-        const formatted = i.toString().padStart(4, '0'); // 0001, 0002...
+    // Load images dynamically
+    async function loadChapterPages() {
+      container.innerHTML = '<div class="loading">Loading pages...</div>';
+      
+      let pageNumber = 1;
+      let hasPages = false;
+      const maxAttempts = 5; // Stop after 5 consecutive missing pages
+      let missingCount = 0;
 
-        img.src = `manga/${manga}/${chapter}/Sololeveling_102_page-${formatted}.jpg`;
-        img.alt = `Page ${i}`;
+      while (missingCount < maxAttempts) {
+        const formattedPage = pageNumber.toString().padStart(4, '0');
+        const imgPath = `manga/${manga}/${chapter}/Sololeveling_102_page-${formattedPage}.jpg`;
+        
+        try {
+          const exists = await checkImageExists(imgPath);
+          if (exists) {
+            const img = document.createElement("img");
+            img.src = imgPath;
+            img.alt = `Page ${pageNumber}`;
+            img.loading = "lazy";
+            
+            if (!hasPages) {
+              container.innerHTML = '';
+              hasPages = true;
+            }
+            
+            container.appendChild(img);
+            missingCount = 0; // Reset missing counter
+          } else {
+            missingCount++;
+          }
+        } catch (error) {
+          missingCount++;
+          console.error(`Error loading page ${pageNumber}:`, error);
+        }
+        
+        pageNumber++;
+      }
 
-        img.onerror = () => {
-          img.remove(); // Remove broken image if not found
-        };
-
-        container.appendChild(img);
+      if (!hasPages) {
+        container.innerHTML = '<p>No pages found for this chapter.</p>';
       }
     }
+
+    // Helper function to check if image exists
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+
+    // Set up navigation
+    function setupNavigation() {
+      const currentChapterNum = parseInt(chapter.replace('ch-', ''));
+      const prevChapterNum = currentChapterNum - 1;
+      const nextChapterNum = currentChapterNum + 1;
+
+      // Previous chapter
+      if (prevChapterNum > 0) {
+        prevChapter.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
+        prevChapterBottom.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
+      } else {
+        prevChapter.classList.add('disabled');
+        prevChapterBottom.classList.add('disabled');
+        prevChapter.textContent = "No Previous Chapter";
+        prevChapterBottom.textContent = "No Previous Chapter";
+      }
+
+      // Next chapter
+      // In a real app, you might want to check if next chapter exists
+      nextChapter.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
+      nextChapterBottom.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
+    }
+
+    // Initialize
+    loadChapterPages();
+    setupNavigation();
   </script>
 </body>
 </html>
