@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 const container = document.getElementById('manga-pages');
-const totalPages = 91;
+const totalPages = 100;
 
 for (let i = 1; i <= totalPages; i++) {
   const pageNum = String(i).padStart(4, '0');
