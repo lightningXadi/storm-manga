@@ -11,7 +11,7 @@
       max-width: 900px;
       margin: 0 auto;
       padding: 20px;
-      padding-bottom: 100px; /* Space for bottom nav */
+      padding-bottom: 100px;
     }
 
     .manga-pages {
@@ -74,7 +74,7 @@
       opacity: 0.6;
     }
 
-    .nav-menu-btn {
+    .nav-btn {
       padding: 12px;
       background: rgba(20, 0, 40, 0.7);
       color: #c084fc;
@@ -94,14 +94,14 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
-    .nav-menu-btn:hover {
+    .nav-btn:hover {
       background: #8b5cf6;
       color: white;
       transform: scale(1.1);
     }
 
-    .nav-menu-btn span {
-      display: none; /* Hide text by default */
+    .nav-btn span {
+      display: none;
     }
 
     .chapter-nav-btn i {
@@ -139,7 +139,6 @@
       50% { opacity: 1; }
     }
 
-    /* Floating back button */
     .back-to-list {
       position: fixed;
       top: 20px;
@@ -164,25 +163,14 @@
       transform: translateX(-3px);
     }
 
-    /* Navigation menu container */
-    .nav-menu-container {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 101;
-    }
-
     @media (min-width: 769px) {
-      .nav-menu-btn {
+      .nav-btn {
         border-radius: 50px;
         width: auto;
         padding: 10px 20px;
       }
-      .nav-menu-btn span {
-        display: inline; /* Show text on desktop */
+      .nav-btn span {
+        display: inline;
         margin-left: 8px;
       }
     }
@@ -191,16 +179,13 @@
       .manga-container {
         padding-bottom: 120px;
       }
-      
-      .nav-menu-container {
+      .nav-btn {
         top: 70px;
         right: 10px;
       }
-      
       .chapter-nav {
         padding: 15px 10px;
       }
-      
       .chapter-nav-btn {
         padding: 10px 15px;
         font-size: 0.9rem;
@@ -215,7 +200,6 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="read.html">Read</a></li>
       </ul>
     </nav>
   </header>
@@ -226,16 +210,10 @@
       <span>Back to List</span>
     </a>
     
-    <div class="nav-menu-container">
-      <a href="index.html" class="nav-menu-btn" title="Home">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="read.html" class="nav-menu-btn" title="Read">
-        <i class="fas fa-book-open"></i>
-        <span>Read</span>
-      </a>
-    </div>
+    <a href="index.html" class="nav-btn" title="Home">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
     
     <h1 id="chapter-title" class="chapter-title">Loading...</h1>
     
@@ -266,7 +244,6 @@
 
       if (!container || !chapterTitle) return;
 
-      // Get URL params
       const urlParams = new URLSearchParams(window.location.search);
       const manga = urlParams.get("manga");
       const chapter = urlParams.get("chapter");
@@ -276,18 +253,15 @@
         return;
       }
 
-      // Format title
       const chapterNum = chapter.startsWith('ch-') ? chapter.replace('ch-', '') : chapter;
       chapterTitle.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - CHAPTER ${chapterNum}`;
 
-      // Image loading parameters
       const maxTryPages = 200;
       const maxMisses = 5;
       let missCount = 0;
       let currentPage = 1;
       let hasPages = false;
 
-      // Function to check if image exists
       const checkImageExists = (url) => {
         return new Promise(resolve => {
           const img = new Image();
@@ -297,7 +271,6 @@
         });
       };
 
-      // Load pages dynamically
       async function loadPages() {
         container.innerHTML = '<div class="loading">Loading pages...</div>';
         
@@ -332,28 +305,23 @@
         }
       }
 
-      // Set up navigation
       function setupNavigation() {
         const currentChapterNum = parseInt(chapterNum);
         const prevChapterNum = currentChapterNum - 1;
         const nextChapterNum = currentChapterNum + 1;
 
-        // Previous chapter
         if (prevChapterNum > 0) {
           prevBtn.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
         } else {
           prevBtn.classList.add('disabled');
         }
 
-        // Next chapter
         nextBtn.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
       }
 
-      // Initialize
       await loadPages();
       setupNavigation();
 
-      // Preload next chapter's first page
       const nextChapterNum = parseInt(chapterNum) + 1;
       const nextChapterUrl = `manga/${manga}/ch-${nextChapterNum}/Sololeveling_102_page-0001.jpg`;
       new Image().src = nextChapterUrl;
