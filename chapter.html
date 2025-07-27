@@ -2,37 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chapter | Storm Manga</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chapter Reader | Storm Manga</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .manga-pages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .manga-pages img {
+      max-width: 90%;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #00f0ff44;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 <body>
-
   <header>
     <div class="logo">⚡ Storm Realm</div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="read.html">All Manga</a></li>
+        <li><a href="read.html">Read</a></li>
       </ul>
     </nav>
   </header>
 
-  <div class="manga-container">
-    <h1 class="chapter-title">Loading Chapter...</h1>
-    <div id="manga-pages"></div>
-    
-    <div class="chapter-nav">
-      <a id="prev-chapter" class="btn">← Previous</a>
-      <a id="next-chapter" class="btn">Next →</a>
-    </div>
-  </div>
+  <main>
+    <h1 id="chapter-title" style="text-align: center;">Loading...</h1>
+    <div class="manga-pages" id="manga-pages"></div>
+  </main>
 
   <footer>
-    © 2025 Storm Manga. Made with ⚡ and neon.
+    © 2025 Storm Manga. Made with ⚡ and storytelling.
   </footer>
 
-  <script src="script.js" defer></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const manga = params.get("manga");
+    const chapter = params.get("chapter");
+
+    const title = document.getElementById("chapter-title");
+    const container = document.getElementById("manga-pages");
+
+    if (!manga || !chapter) {
+      title.textContent = "Invalid Chapter";
+    } else {
+      title.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - ${chapter.toUpperCase()}`;
+
+      // You can customize image count as per your folders
+      const totalImages = 10; // 👈 Change based on max pages per chapter
+
+      for (let i = 1; i <= totalImages; i++) {
+        const img = document.createElement("img");
+        const formatted = i.toString().padStart(4, '0'); // 0001, 0002...
+
+        img.src = `manga/${manga}/${chapter}/Sololeveling_102_page-${formatted}.jpg`;
+        img.alt = `Page ${i}`;
+
+        img.onerror = () => {
+          img.remove(); // Remove broken image if not found
+        };
+
+        container.appendChild(img);
+      }
+    }
+  </script>
 </body>
 </html>
-
