@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solo leveling | Storm Manga</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chapters | Storm Manga</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -14,20 +14,38 @@
     <nav id="nav-menu">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="read.html">Read</a></li>
-        <!-- Keep other nav items -->
+        <li><a href="read.html" class="active">Read</a></li>
       </ul>
     </nav>
   </header>
 
-  <div class="card">
-  <h3><a href="solo-leveling-ch102.html" class="manga-link">📖 Solo Leveling – Chapter 102</a></h3>
-  <p>The legendary hunter Sung Jin-Woo takes a powerful leap in this thrilling chapter!</p>
-</div>
-
+  <main>
+    <h2 id="manga-title" class="section-title">Chapters</h2>
+    <div id="chapter-list"></div>
+  </main>
 
   <footer>
     © 2025 Storm Manga. Made with ⚡ and neon.
   </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const manga = params.get('manga');
+
+    document.getElementById("manga-title").innerText = `${manga.replace(/-/g, ' ')} - Chapters`;
+
+    const totalChapters = 10; // You can increase this based on your folders
+
+    const listContainer = document.getElementById("chapter-list");
+    for (let i = totalChapters; i >= 1; i--) {
+      const chLink = document.createElement("div");
+      chLink.className = "card";
+      chLink.innerHTML = `
+        <h3><a href="chapter.html?manga=${manga}&chapter=ch-${i}" class="manga-link">📖 Chapter ${i}</a></h3>
+        <p>Click to read Chapter ${i} of ${manga.replace(/-/g, ' ')}</p>
+      `;
+      listContainer.appendChild(chLink);
+    }
+  </script>
 </body>
 </html>
