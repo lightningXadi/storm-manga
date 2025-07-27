@@ -6,54 +6,132 @@
   <title>Chapter Reader | Storm Manga</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    .manga-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
     .manga-pages {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
+      padding: 1rem 0;
     }
 
     .manga-pages img {
-      max-width: 90%;
-      margin-bottom: 20px;
-      box-shadow: 0 0 15px #00f0ff44;
-      border-radius: 12px;
+      max-width: 100%;
+      margin-bottom: 1px;
+      border-radius: 8px;
+      box-shadow: 0 5px 25px rgba(0, 240, 255, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .manga-pages img:hover {
+      transform: scale(1.01);
     }
 
     .chapter-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: space-between;
-      width: 90%;
-      margin: 20px auto;
-      padding: 10px 0;
+      padding: 15px 5%;
+      background: linear-gradient(transparent, #140024cc);
+      backdrop-filter: blur(10px);
+      z-index: 100;
     }
 
-    .chapter-nav a {
-      padding: 10px 20px;
-      background: #333;
+    .chapter-nav-btn {
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
       color: white;
-      border-radius: 5px;
+      border-radius: 50px;
       text-decoration: none;
-      transition: background 0.3s;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .chapter-nav a:hover {
-      background: #555;
+    .chapter-nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
     }
 
-    .chapter-nav a.disabled {
-      background: #999;
-      cursor: not-allowed;
+    .chapter-nav-btn.disabled {
+      background: #666;
+      box-shadow: none;
       pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .chapter-nav-btn i {
+      font-size: 1.2em;
+    }
+
+    .chapter-title {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 1.8rem;
+      color: #c084fc;
+      text-shadow: 0 0 15px #a855f7;
+      position: relative;
+    }
+
+    .chapter-title::after {
+      content: "";
+      display: block;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #a855f7, transparent);
+      margin: 10px auto;
     }
 
     .loading {
       text-align: center;
-      padding: 20px;
-      font-style: italic;
-      color: #777;
+      padding: 50px;
+      font-size: 1.2rem;
+      color: #c084fc;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Floating back button */
+    .back-to-list {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(20, 0, 40, 0.7);
+      backdrop-filter: blur(5px);
+      padding: 8px 15px;
+      border-radius: 50px;
+      color: #c084fc;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 101;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-to-list:hover {
+      background: #8b5cf6;
+      color: white;
+      transform: translateX(-3px);
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <header>
@@ -66,18 +144,25 @@
     </nav>
   </header>
 
-  <main>
-    <h1 id="chapter-title" style="text-align: center;">Loading...</h1>
-    <div class="chapter-nav">
-      <a id="prev-chapter" href="#">Previous Chapter</a>
-      <a id="manga-list" href="#">Manga List</a>
-      <a id="next-chapter" href="#">Next Chapter</a>
-    </div>
+  <main class="manga-container">
+    <a href="read.html" class="back-to-list">
+      <i class="fas fa-arrow-left"></i>
+      <span>Back to List</span>
+    </a>
+    
+    <h1 id="chapter-title" class="chapter-title">Loading...</h1>
+    
     <div class="manga-pages" id="manga-pages"></div>
+    
     <div class="chapter-nav">
-      <a id="prev-chapter-bottom" href="#">Previous Chapter</a>
-      <a id="manga-list-bottom" href="#">Manga List</a>
-      <a id="next-chapter-bottom" href="#">Next Chapter</a>
+      <a id="prev-chapter" href="#" class="chapter-nav-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>Previous</span>
+      </a>
+      <a id="next-chapter" href="#" class="chapter-nav-btn">
+        <span>Next</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
     </div>
   </main>
 
@@ -87,107 +172,105 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("manga-pages");
-  const chapterTitle = document.getElementById("chapter-title");
-  const prevBtn = document.getElementById("prev-chapter");
-  const nextBtn = document.getElementById("next-chapter");
+      const container = document.getElementById("manga-pages");
+      const chapterTitle = document.getElementById("chapter-title");
+      const prevBtn = document.getElementById("prev-chapter");
+      const nextBtn = document.getElementById("next-chapter");
 
-  if (!container || !chapterTitle) return;
+      if (!container || !chapterTitle) return;
 
-  // Get URL params
-  const urlParams = new URLSearchParams(window.location.search);
-  const manga = urlParams.get("manga"); // e.g., "solo-leveling"
-  const chapter = urlParams.get("chapter"); // e.g., "1" or "ch-1"
+      // Get URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const manga = urlParams.get("manga");
+      const chapter = urlParams.get("chapter");
 
-  if (!manga || !chapter) {
-    container.innerHTML = "<p>Invalid chapter link</p>";
-    return;
-  }
-
-  // Format title
-  const chapterNum = chapter.startsWith('ch-') ? chapter.replace('ch-', '') : chapter;
-  chapterTitle.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - Chapter ${chapterNum}`;
-
-  // Image loading parameters
-  const maxTryPages = 200;
-  const maxMisses = 5;
-  let missCount = 0;
-  let currentPage = 1;
-  let hasPages = false;
-
-  // Function to check if image exists
-  const checkImageExists = (url) => {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-      img.src = url;
-    });
-  };
-
-  // Load pages dynamically
-  async function loadPages() {
-    container.innerHTML = '<div class="loading">Loading pages...</div>';
-    
-    while (missCount < maxMisses && currentPage <= maxTryPages) {
-      const pageNum = String(currentPage).padStart(4, "0");
-      // Updated path construction to match your structure
-      const imgUrl = `manga/${manga}/ch-${chapterNum}/Sololeveling_102_page-${pageNum}.jpg`;
-
-      const exists = await checkImageExists(imgUrl);
-      
-      if (exists) {
-        if (!hasPages) {
-          container.innerHTML = '';
-          hasPages = true;
-        }
-        
-        const pageDiv = document.createElement("div");
-        pageDiv.className = "manga-page";
-        
-        const img = document.createElement("img");
-        img.src = imgUrl;
-        img.alt = `Page ${currentPage}`;
-        img.loading = "lazy";
-        
-        pageDiv.appendChild(img);
-        container.appendChild(pageDiv);
-        
-        missCount = 0;
-      } else {
-        missCount++;
+      if (!manga || !chapter) {
+        container.innerHTML = "<p>Invalid chapter link</p>";
+        return;
       }
-      
-      currentPage++;
-    }
 
-    if (!hasPages) {
-      container.innerHTML = '<p>No pages found for this chapter.</p>';
-    }
-  }
+      // Format title
+      const chapterNum = chapter.startsWith('ch-') ? chapter.replace('ch-', '') : chapter;
+      chapterTitle.textContent = `${manga.replace(/-/g, ' ').toUpperCase()} - CHAPTER ${chapterNum}`;
 
-  // Set up navigation
-  function setupNavigation() {
-    const currentChapterNum = parseInt(chapterNum);
-    const prevChapterNum = currentChapterNum - 1;
-    const nextChapterNum = currentChapterNum + 1;
+      // Image loading parameters
+      const maxTryPages = 200;
+      const maxMisses = 5;
+      let missCount = 0;
+      let currentPage = 1;
+      let hasPages = false;
 
-    // Previous chapter
-    if (prevChapterNum > 0) {
-      prevBtn.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
-    } else {
-      prevBtn.classList.add('disabled');
-      prevBtn.textContent = "No Previous Chapter";
-    }
+      // Function to check if image exists
+      const checkImageExists = (url) => {
+        return new Promise(resolve => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(false);
+          img.src = url;
+        });
+      };
 
-    // Next chapter
-    nextBtn.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
-  }
+      // Load pages dynamically
+      async function loadPages() {
+        container.innerHTML = '<div class="loading">Loading pages...</div>';
+        
+        while (missCount < maxMisses && currentPage <= maxTryPages) {
+          const pageNum = String(currentPage).padStart(4, "0");
+          const imgUrl = `manga/${manga}/ch-${chapterNum}/Sololeveling_102_page-${pageNum}.jpg`;
 
-  // Initialize
-  await loadPages();
-  setupNavigation();
-});
+          const exists = await checkImageExists(imgUrl);
+          
+          if (exists) {
+            if (!hasPages) {
+              container.innerHTML = '';
+              hasPages = true;
+            }
+            
+            const img = document.createElement("img");
+            img.src = imgUrl;
+            img.alt = `Page ${currentPage}`;
+            img.loading = currentPage < 3 ? "eager" : "lazy"; // Eager load first few pages
+            
+            container.appendChild(img);
+            missCount = 0;
+          } else {
+            missCount++;
+          }
+          
+          currentPage++;
+        }
+
+        if (!hasPages) {
+          container.innerHTML = '<p>No pages found for this chapter.</p>';
+        }
+      }
+
+      // Set up navigation
+      function setupNavigation() {
+        const currentChapterNum = parseInt(chapterNum);
+        const prevChapterNum = currentChapterNum - 1;
+        const nextChapterNum = currentChapterNum + 1;
+
+        // Previous chapter
+        if (prevChapterNum > 0) {
+          prevBtn.href = `chapter.html?manga=${manga}&chapter=ch-${prevChapterNum}`;
+        } else {
+          prevBtn.classList.add('disabled');
+        }
+
+        // Next chapter
+        nextBtn.href = `chapter.html?manga=${manga}&chapter=ch-${nextChapterNum}`;
+      }
+
+      // Initialize
+      await loadPages();
+      setupNavigation();
+
+      // Preload next chapter's first page
+      const nextChapterNum = parseInt(chapterNum) + 1;
+      const nextChapterUrl = `manga/${manga}/ch-${nextChapterNum}/Sololeveling_102_page-0001.jpg`;
+      new Image().src = nextChapterUrl;
+    });
   </script>
 </body>
 </html>
