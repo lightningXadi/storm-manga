@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo Leveling Ch.102 | Storm Manga</title>
+  <link rel="stylesheet" href="style.css"> <!-- All styles here -->
+</head>
+<body>
+  <!-- Your Header -->
+  <header>
+    <div class="logo">⚡ Storm Manga</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="read.html">All Manga</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Manga Content -->
+  <div class="manga-container">
+    <h1 class="chapter-title">Solo Leveling - Chapter 102</h1>
+    <div id="manga-pages"></div>
+    
+    <div class="chapter-nav">
+      <a href="solo-leveling-ch101.html" class="btn">← Previous</a>
+      <a href="solo-leveling-ch103.html" class="btn">Next →</a>
+    </div>
+  </div>
+
+  <!-- Your Footer -->
+  <footer>
+    © 2025 Storm Manga. Made with ⚡ and neon.
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const container = document.getElementById('manga-pages');
+    const totalPages = 83; // Update per chapter
+    
+    for (let i = 1; i <= totalPages; i++) {
+      const pageNum = String(i).padStart(4, '0');
+      container.innerHTML += `
+        <div class="manga-page">
+          <img 
+            src="manga/solo-level/Sololeveling_102_page-${pageNum}.jpg" 
+            alt="Page ${i}"
+            loading="lazy"
+          >
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
