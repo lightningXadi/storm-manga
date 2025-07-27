@@ -215,9 +215,10 @@ footer {
     align-items: center;
   }
 
-  nav.active {
-    display: block;
-  }
+  /* ✅ NEW CODE (FIXED) */
+#nav-menu.active {
+  display: block;
+}
 
   .hero-text h1 {
     font-size: 2rem;
