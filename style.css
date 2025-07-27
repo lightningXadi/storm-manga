@@ -291,3 +291,14 @@ footer {
 .manga-link:hover {
   text-shadow: 0 0 10px #d946ef; /* Adds glow effect on hover */
 }
+/* Make card titles clickable */
+.card h3 a {
+  color: inherit; /* Keeps your purple text color */
+  text-decoration: none; /* Removes underline */
+  display: block; /* Makes entire area clickable */
+}
+
+.card h3 a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #d946ef; /* Adds glow effect */
+}
