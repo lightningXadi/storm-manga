@@ -35,22 +35,7 @@
   </footer>
 
   <!-- JavaScript -->
-  <script>
-    const container = document.getElementById('manga-pages');
-    const totalPages = 83; // Update per chapter
-    
-    for (let i = 1; i <= totalPages; i++) {
-      const pageNum = String(i).padStart(4, '0');
-      container.innerHTML += `
-        <div class="manga-page">
-          <img 
-            src="manga/solo-level/Sololeveling_102_page-${pageNum}.jpg" 
-            alt="Page ${i}"
-            loading="lazy"
-          >
-        </div>
-      `;
-    }
-  </script>
+ <script src="script.js" defer></script>
+
 </body>
 </html>
