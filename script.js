@@ -1,92 +1,48 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const container = document.getElementById("manga-pages");
-  if (!container) return;
-
-  const maxTryPages = 200;
-  const maxMisses = 5;
-  let missCount = 0;
-  let i = 1;
-
-  function loadNextImage() {
-    if (i > maxTryPages || missCount >= maxMisses) return;
-
-    const pageNum = String(i).padStart(4, "0");
-    const imgUrl = `manga/solo-level/Sololeveling_102_page-${pageNum}.jpg`;
-
-    const testImg = new Image();
-    testImg.onload = function () {
-      container.innerHTML += `
-        <div class="manga-page">
-          <img src="${imgUrl}" alt="Page ${i}" loading="lazy">
-        </div>
-      `;
-      missCount = 0;
-      i++;
-      loadNextImage();
-    };
-    testImg.onerror = function () {
-      console.warn(`Missing: ${imgUrl}`);
-      missCount++;
-      i++;
-      loadNextImage();
-    };
-
-    console.log("Checking image:", imgUrl); // Debug
-    testImg.src = imgUrl;
+document.addEventListener("DOMContentLoaded", async function() {
+  // Hamburger Menu Toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', function() {
+      navMenu.classList.toggle('active');
+      menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+    });
   }
 
-  loadNextImage();
-});
-// 🌐 Dynamic Chapter Loader
-document.addEventListener("DOMContentLoaded", async () => {
+  // Chapter Loading Functionality
   const container = document.getElementById("manga-pages");
-  const chapterTitle = document.querySelector(".chapter-title");
+  const chapterTitle = document.getElementById("chapter-title") || document.querySelector(".chapter-title");
   const prevBtn = document.getElementById("prev-chapter");
   const nextBtn = document.getElementById("next-chapter");
 
-  if (!container || !chapterTitle) return;
+  if (!container) return;
 
-  // ⛓️ Get URL params
+  // Get URL params - compatible with both "series" and "manga" parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const series = urlParams.get("series"); // e.g., "solo-level"
-  const chapter = urlParams.get("chapter"); // e.g., "102"
+  const series = urlParams.get("series") || urlParams.get("manga");
+  const chapter = urlParams.get("chapter");
 
   if (!series || !chapter) {
     container.innerHTML = "<p>Invalid chapter link</p>";
     return;
   }
 
-  chapterTitle.textContent = `${series.replace(/-/g, " ")} - Chapter ${chapter}`;
+  // Format title
+  const displayName = series.replace(/-/g, " ");
+  const chapterNum = chapter.startsWith('ch-') ? chapter.replace('ch-', '') : chapter;
+  if (chapterTitle) {
+    chapterTitle.textContent = `${displayName.toUpperCase()} - Chapter ${chapterNum}`;
+  }
 
-  const basePath = `manga/${series}`;
-  const filePrefix = `${series.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join("")}_${chapter}_page-`;
-
+  // Image loading parameters
+  const maxTryPages = 200;
+  const maxMisses = 5;
+  let missCount = 0;
   let currentPage = 1;
-  let maxConfirmedPage = 0;
-  const maxAttempts = 5;
+  let hasPages = false;
 
-  const loadPages = async () => {
-    while (true) {
-      const pageNum = String(currentPage).padStart(4, "0");
-      const imgUrl = `${basePath}/${filePrefix}${pageNum}.jpg`;
-
-      const exists = await checkImageExists(imgUrl);
-
-      if (exists) {
-        container.innerHTML += `
-          <div class="manga-page">
-            <img src="${imgUrl}" alt="Page ${currentPage}" loading="lazy">
-          </div>
-        `;
-        maxConfirmedPage = currentPage;
-        currentPage++;
-      } else {
-        if (currentPage > maxConfirmedPage + maxAttempts) break;
-        currentPage++;
-      }
-    }
-  };
-
+  // Function to check if image exists
   const checkImageExists = (url) => {
     return new Promise(resolve => {
       const img = new Image();
@@ -96,9 +52,74 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  loadPages();
+  // Load pages dynamically
+  async function loadPages() {
+    container.innerHTML = '<div class="loading">Loading pages...</div>';
+    
+    while (missCount < maxMisses && currentPage <= maxTryPages) {
+      const pageNum = String(currentPage).padStart(4, "0");
+      
+      // Try both possible path formats
+      let imgUrl = `manga/${series}/ch-${chapterNum}/Sololeveling_102_page-${pageNum}.jpg`;
+      let exists = await checkImageExists(imgUrl);
+      
+      // Alternative path format if first one fails
+      if (!exists) {
+        imgUrl = `manga/${series}/${chapter}/Sololeveling_102_page-${pageNum}.jpg`;
+        exists = await checkImageExists(imgUrl);
+      }
 
-  // Navigation links
-  prevBtn.href = `chapter.html?series=${series}&chapter=${parseInt(chapter) - 1}`;
-  nextBtn.href = `chapter.html?series=${series}&chapter=${parseInt(chapter) + 1}`;
+      if (exists) {
+        if (!hasPages) {
+          container.innerHTML = '';
+          hasPages = true;
+        }
+        
+        const pageDiv = document.createElement("div");
+        pageDiv.className = "manga-page";
+        
+        const img = document.createElement("img");
+        img.src = imgUrl;
+        img.alt = `Page ${currentPage}`;
+        img.loading = "lazy";
+        
+        pageDiv.appendChild(img);
+        container.appendChild(pageDiv);
+        
+        missCount = 0;
+      } else {
+        missCount++;
+      }
+      
+      currentPage++;
+    }
+
+    if (!hasPages) {
+      container.innerHTML = '<p>No pages found for this chapter.</p>';
+    }
+  }
+
+  // Set up navigation
+  function setupNavigation() {
+    if (!prevBtn || !nextBtn) return;
+    
+    const currentChapterNum = parseInt(chapterNum);
+    const prevChapterNum = currentChapterNum - 1;
+    const nextChapterNum = currentChapterNum + 1;
+
+    // Previous chapter
+    if (prevChapterNum > 0) {
+      prevBtn.href = `chapter.html?manga=${series}&chapter=ch-${prevChapterNum}`;
+    } else {
+      prevBtn.classList.add('disabled');
+      prevBtn.textContent = "No Previous Chapter";
+    }
+
+    // Next chapter
+    nextBtn.href = `chapter.html?manga=${series}&chapter=ch-${nextChapterNum}`;
+  }
+
+  // Initialize
+  await loadPages();
+  setupNavigation();
 });
