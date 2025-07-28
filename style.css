@@ -135,6 +135,9 @@ footer {
   font-size: 0.8rem;
   margin-top: 3rem;
 }
+.menu-toggle {
+  display: none;
+}
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
