@@ -138,6 +138,11 @@ footer {
 .menu-toggle {
   display: none;
 }
+main {
+  margin-top: 100px; /* adjust if your header is taller or shorter */
+  padding: 0 20px;
+}
+
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
@@ -183,3 +188,9 @@ footer {
     padding-top: 1rem;
   }
 }
+@media (max-width: 768px) {
+  main {
+    margin-top: 80px;
+  }
+}
+
