@@ -71,6 +71,7 @@ nav ul li a:hover {
   align-items: center;
   justify-content: flex-start;
   padding: 0 5%;
+  z-index: 1;
 }
 
 .hero::after {
@@ -79,7 +80,7 @@ nav ul li a:hover {
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 0, 40, 0.1); /* Optional very light dark overlay */
+  background: rgba(10, 0, 40, 0.1);
   z-index: 1;
 }
 
@@ -100,6 +101,7 @@ nav ul li a:hover {
   font-size: 3rem;
   color: #c084fc;
   text-shadow: 0 0 20px #c084fc;
+  line-height: 1.2;
 }
 
 .hero-text p {
@@ -126,6 +128,48 @@ nav ul li a:hover {
   box-shadow: 0 0 30px #a855f7;
 }
 
+/* ========== CARD STYLES (used on read.html) ========== */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #9333ea;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(147, 51, 234, 0.2);
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: #c084fc;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.card .manga-link {
+  display: inline-block;
+  color: #fff;
+  background: #7c3aed;
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.card .manga-link:hover {
+  background: #a855f7;
+  text-shadow: 0 0 10px #e879f9;
+}
+
 /* ========== FOOTER ========== */
 footer {
   text-align: center;
@@ -135,14 +179,20 @@ footer {
   font-size: 0.8rem;
   margin-top: 3rem;
 }
-.menu-toggle {
-  display: none;
-}
+
+/* ========== PAGE LAYOUT ========== */
 main {
-  margin-top: 100px; /* adjust if your header is taller or shorter */
+  margin-top: 100px;
   padding: 0 20px;
 }
 
+/* ========== TOGGLE BUTTON ========== */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  color: #a855f7;
+  cursor: pointer;
+}
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
@@ -187,10 +237,8 @@ main {
   .hero {
     padding-top: 1rem;
   }
-}
-@media (max-width: 768px) {
+
   main {
     margin-top: 80px;
   }
 }
-
