@@ -17,10 +17,13 @@ body {
   overflow-x: hidden;
 }
 
+/* ========== HEADER ========== */
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  width: 100%;
+  z-index: 999;
   background: rgba(20, 0, 40, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -55,21 +58,7 @@ nav ul li a:hover {
   text-shadow: 0 0 10px #d946ef;
 }
 
-.menu-toggle {
-  display: none;
-  position: absolute;
-  top: 1.2rem;
-  right: 1.5rem;
-  font-size: 2rem;
-  color: #a855f7;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-/* =============== */
-/* HERO SECTION    */
-/* =============== */
-
+/* ========== HERO SECTION ========== */
 .hero {
   position: relative;
   width: 100%;
@@ -81,18 +70,30 @@ nav ul li a:hover {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 5%;
+  padding: 0 5%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 0, 40, 0.1); /* Optional very light dark overlay */
+  z-index: 1;
 }
 
 .hero-overlay {
+  position: relative;
   z-index: 2;
-  animation: fadeInUp 1s ease-out forwards;
+  text-align: left;
+  max-width: 600px;
 }
 
 .hero-text {
-  text-align: left;
-  color: #fff;
-  max-width: 600px;
+  background: none;
+  padding: 0;
+  backdrop-filter: none;
 }
 
 .hero-text h1 {
@@ -125,9 +126,7 @@ nav ul li a:hover {
   box-shadow: 0 0 30px #a855f7;
 }
 
-/* =============== */
-/* FOOTER          */
-/* =============== */
+/* ========== FOOTER ========== */
 footer {
   text-align: center;
   padding: 1rem;
@@ -137,104 +136,11 @@ footer {
   margin-top: 3rem;
 }
 
-/* =============== */
-/* CARD COMPONENTS */
-/* =============== */
-.card {
-  border: 2px solid #7c3aed;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  color: #c084fc;
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
-  transition: 0.3s ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  background: #7c3aed;
-  color: white;
-  box-shadow: 0 0 25px #7c3aed;
-}
-
-.card h3 a {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-}
-
-.card h3 a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px #d946ef;
-}
-
-/* =============== */
-/* MANGA READER    */
-/* =============== */
-.manga-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.manga-page {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.manga-page img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(123, 31, 162, 0.5);
-  transition: transform 0.3s ease;
-}
-
-.manga-page img:hover {
-  transform: scale(1.02);
-}
-
-.chapter-title {
-  color: #c084fc;
-  text-align: center;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px #a855f7;
-}
-
-.chapter-nav {
-  display: flex;
-  justify-content: space-between;
-  margin: 30px 0;
-}
-
-.manga-page.loading {
-  min-height: 100vh;
-  background: rgba(20, 0, 40, 0.7) url('loading-spinner.svg') no-repeat center;
-}
-
-/* =============== */
-/* ANIMATIONS & RESPONSIVE */
-/* =============== */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media(max-width: 768px) {
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
   header {
     flex-direction: column;
     align-items: center;
-  }
-
-  .menu-toggle {
-    display: block;
   }
 
   nav {
@@ -247,6 +153,10 @@ footer {
     flex-direction: column;
     gap: 0.8rem;
     align-items: center;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 
   #nav-menu.active {
@@ -267,21 +177,6 @@ footer {
   }
 
   .hero {
-    padding: 1rem;
-    justify-content: center;
-    text-align: center;
+    padding-top: 1rem;
   }
-
-  .hero-text {
-    max-width: 90%;
-  }
-}
-
-/* Link Styling */
-.manga-link {
-  color: inherit;
-  text-decoration: none;
-}
-.manga-link:hover {
-  text-shadow: 0 0 10px #d946ef;
 }
