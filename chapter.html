@@ -281,7 +281,8 @@
         
         while (missCount < maxMisses && currentPage <= maxTryPages) {
           const pageNum = String(currentPage).padStart(4, "0");
-          const imgUrl = `manga/${manga}/ch-${chapterNum}/Sololeveling_102_page-${pageNum}.jpg`;
+          const imgUrl = `manga/${manga}/ch-${chapterNum}/page-${pageNum}.jpg`;
+
 
           const exists = await checkImageExists(imgUrl);
           
