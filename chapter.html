@@ -280,9 +280,8 @@
         container.innerHTML = '<div class="loading">Loading pages...</div>';
         
         while (missCount < maxMisses && currentPage <= maxTryPages) {
-          const pageNum = String(currentPage).padStart(4, "0");
+          const pageNum = String(currentPage).padStart(4, "0"); 
           const imgUrl = `manga/${manga}/ch-${chapterNum}/page-${pageNum}.jpg`;
-
 
           const exists = await checkImageExists(imgUrl);
           
@@ -328,8 +327,9 @@
       await loadPages();
       setupNavigation();
 
+      // Preload next chapter's first page
       const nextChapterNum = parseInt(chapterNum) + 1;
-      const nextChapterUrl = `manga/${manga}/ch-${nextChapterNum}/Sololeveling_102_page-0001.jpg`;
+      const nextChapterUrl = `manga/${manga}/ch-${nextChapterNum}/page-0001.jpg`;
       new Image().src = nextChapterUrl;
     });
   </script>
