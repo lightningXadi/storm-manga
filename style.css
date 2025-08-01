@@ -36,7 +36,7 @@ header {
   font-weight: bold;
   color: #9b5cff;
   text-shadow: 0 0 10px #9b5cff, 0 0 20px #6bc6ff;
-  animation: floatText 3s ease-in-out infinite;
+  animation: floatText 3s ease-in-out infinite; /* subtle floating animation */
 }
 
 nav ul {
@@ -61,10 +61,10 @@ nav ul li a.active {
   box-shadow: 0 0 10px #9b5cff;
 }
 
-/* 📖 Section Wrapper (Reusable for all pages) */
-.section {
+/* 📖 Publish Section */
+.publish-section {
   flex: 1;
-  max-width: 900px;
+  max-width: 700px;
   margin: 40px auto;
   padding: 30px;
   background: rgba(255, 255, 255, 0.05);
@@ -74,8 +74,7 @@ nav ul li a.active {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* Headings */
-.section h1 {
+.publish-section h1 {
   font-size: 2rem;
   color: #9b5cff;
   text-align: center;
@@ -90,21 +89,20 @@ nav ul li a.active {
   margin-bottom: 25px;
 }
 
-/* 📝 Form (Reusable for Publish, Contact, Shop) */
-.form {
+/* 📝 Form */
+.publish-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.form label {
+.publish-form label {
   font-size: 0.9rem;
   color: #ddd;
 }
 
-.form input,
-.form select,
-.form textarea {
+.publish-form input,
+.publish-form select {
   padding: 12px;
   border: none;
   border-radius: 12px;
@@ -115,15 +113,14 @@ nav ul li a.active {
   transition: all 0.3s ease;
 }
 
-.form input:focus,
-.form select:focus,
-.form textarea:focus {
+.publish-form input:focus,
+.publish-form select:focus {
   box-shadow: 0 0 15px #9b5cff, 0 0 30px #6bc6ff;
   transform: scale(1.02);
 }
 
-/* 🚀 Button (Reusable) */
-.button {
+/* 🚀 Button */
+.publish-form button {
   padding: 14px;
   font-size: 1rem;
   font-weight: bold;
@@ -138,14 +135,14 @@ nav ul li a.active {
   overflow: hidden;
 }
 
-.button:hover {
+.publish-form button:hover {
   background: linear-gradient(135deg, #6bc6ff, #9b5cff);
   transform: scale(1.05);
   box-shadow: 0 0 25px #6bc6ff, 0 0 40px #9b5cff;
 }
 
 /* Ripple effect on click */
-.button:active::after {
+.publish-form button:active::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -197,17 +194,16 @@ footer {
     gap: 10px;
   }
 
-  .section {
+  .publish-section {
     margin: 20px;
     padding: 20px;
   }
 }
 
 @media (max-width: 500px) {
-  .form input,
-  .form select,
-  .form textarea,
-  .button {
+  .publish-form input,
+  .publish-form select,
+  .publish-form button {
     font-size: 0.9rem;
     padding: 10px;
   }
