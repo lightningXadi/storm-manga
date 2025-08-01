@@ -14,7 +14,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
 }
 
 /* 🌐 Header */
@@ -36,7 +35,6 @@ header {
   font-weight: bold;
   color: #9b5cff;
   text-shadow: 0 0 10px #9b5cff, 0 0 20px #6bc6ff;
-  animation: floatText 3s ease-in-out infinite; /* subtle floating animation */
 }
 
 nav ul {
@@ -131,33 +129,12 @@ nav ul li a.active {
   cursor: pointer;
   transition: 0.3s;
   box-shadow: 0 0 15px #9b5cff;
-  position: relative;
-  overflow: hidden;
 }
 
 .publish-form button:hover {
   background: linear-gradient(135deg, #6bc6ff, #9b5cff);
   transform: scale(1.05);
   box-shadow: 0 0 25px #6bc6ff, 0 0 40px #9b5cff;
-}
-
-/* Ripple effect on click */
-.publish-form button:active::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255,255,255,0.4);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: ripple 0.6s linear;
-}
-
-@keyframes ripple {
-  from { width: 0; height: 0; opacity: 1; }
-  to { width: 300px; height: 300px; opacity: 0; }
 }
 
 /* 🌌 Footer */
@@ -177,11 +154,6 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes floatText {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
 /* 📱 Responsive */
 @media (max-width: 768px) {
   header {
@@ -198,13 +170,4 @@ footer {
     margin: 20px;
     padding: 20px;
   }
-}
-
-@media (max-width: 500px) {
-  .publish-form input,
-  .publish-form select,
-  .publish-form button {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-}
+}  
