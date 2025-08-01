@@ -1,198 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Orbitron', sans-serif;
-  background-color: #0a001a;
-  color: #fff;
-  overflow-x: hidden;
-}
-
-/* ========== HEADER ========== */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-  background: rgba(20, 0, 40, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.logo {
-  font-size: 1.8rem;
-  color: #a855f7;
-  text-shadow: 0 0 15px #a855f7;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-nav ul li a {
-  color: #c084fc;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-nav ul li a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px #d946ef;
-}
-
-/* ========== HERO SECTION ========== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-image: url("bp.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0 5%;
-  z-index: 1;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 0, 40, 0.1);
-  z-index: 1;
-}
-
-.hero-overlay {
-  position: relative;
-  z-index: 2;
-  text-align: left;
-  max-width: 600px;
-}
-
-.hero-text {
-  background: none;
-  padding: 0;
-  backdrop-filter: none;
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  color: #c084fc;
-  text-shadow: 0 0 20px #c084fc;
-  line-height: 1.2;
-}
-
-.hero-text p {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #ccc;
-}
-
-.btn {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 0.8rem 1.5rem;
-  background: #8b5cf6;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 0 20px #9333ea;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #7c3aed;
-  box-shadow: 0 0 30px #a855f7;
-}
-
-/* ========== CARD STYLES (used on read.html) ========== */
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid #9333ea;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  background: rgba(147, 51, 234, 0.2);
-  box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
-}
-
-.card h3 {
-  font-size: 1.5rem;
-  color: #c084fc;
-  margin-bottom: 0.5rem;
-}
-
-.card p {
-  color: #ccc;
-  margin-bottom: 1rem;
-}
-
-.card .manga-link {
-  display: inline-block;
-  color: #fff;
-  background: #7c3aed;
-  padding: 0.5rem 1.2rem;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: background 0.3s ease;
-}
-
-.card .manga-link:hover {
-  background: #a855f7;
-  text-shadow: 0 0 10px #e879f9;
-}
-
-/* ========== FOOTER ========== */
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #140024;
-  color: #666;
-  font-size: 0.8rem;
-  margin-top: 3rem;
-}
-
-/* ========== PAGE LAYOUT ========== */
-main {
-  margin-top: 100px;
-  padding: 0 20px;
-}
-
-/* ========== TOGGLE BUTTON ========== */
-.menu-toggle {
-  display: none;
-  font-size: 2rem;
-  color: #a855f7;
-  cursor: pointer;
-}
 /* 🌌 Storm Realm Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -209,6 +14,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* 🌐 Header */
@@ -230,6 +36,7 @@ header {
   font-weight: bold;
   color: #9b5cff;
   text-shadow: 0 0 10px #9b5cff, 0 0 20px #6bc6ff;
+  animation: floatText 3s ease-in-out infinite;
 }
 
 nav ul {
@@ -254,10 +61,10 @@ nav ul li a.active {
   box-shadow: 0 0 10px #9b5cff;
 }
 
-/* 📖 Publish Section */
-.publish-section {
+/* 📖 Section Wrapper (Reusable for all pages) */
+.section {
   flex: 1;
-  max-width: 700px;
+  max-width: 900px;
   margin: 40px auto;
   padding: 30px;
   background: rgba(255, 255, 255, 0.05);
@@ -267,7 +74,8 @@ nav ul li a.active {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-.publish-section h1 {
+/* Headings */
+.section h1 {
   font-size: 2rem;
   color: #9b5cff;
   text-align: center;
@@ -282,20 +90,21 @@ nav ul li a.active {
   margin-bottom: 25px;
 }
 
-/* 📝 Form */
-.publish-form {
+/* 📝 Form (Reusable for Publish, Contact, Shop) */
+.form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.publish-form label {
+.form label {
   font-size: 0.9rem;
   color: #ddd;
 }
 
-.publish-form input,
-.publish-form select {
+.form input,
+.form select,
+.form textarea {
   padding: 12px;
   border: none;
   border-radius: 12px;
@@ -306,14 +115,15 @@ nav ul li a.active {
   transition: all 0.3s ease;
 }
 
-.publish-form input:focus,
-.publish-form select:focus {
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
   box-shadow: 0 0 15px #9b5cff, 0 0 30px #6bc6ff;
   transform: scale(1.02);
 }
 
-/* 🚀 Button */
-.publish-form button {
+/* 🚀 Button (Reusable) */
+.button {
   padding: 14px;
   font-size: 1rem;
   font-weight: bold;
@@ -324,12 +134,33 @@ nav ul li a.active {
   cursor: pointer;
   transition: 0.3s;
   box-shadow: 0 0 15px #9b5cff;
+  position: relative;
+  overflow: hidden;
 }
 
-.publish-form button:hover {
+.button:hover {
   background: linear-gradient(135deg, #6bc6ff, #9b5cff);
   transform: scale(1.05);
   box-shadow: 0 0 25px #6bc6ff, 0 0 40px #9b5cff;
+}
+
+/* Ripple effect on click */
+.button:active::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  from { width: 0; height: 0; opacity: 1; }
+  to { width: 300px; height: 300px; opacity: 0; }
 }
 
 /* 🌌 Footer */
@@ -349,6 +180,11 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes floatText {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
 /* 📱 Responsive */
 @media (max-width: 768px) {
   header {
@@ -361,58 +197,18 @@ footer {
     gap: 10px;
   }
 
-  .publish-section {
+  .section {
     margin: 20px;
     padding: 20px;
   }
 }
 
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav {
-    display: none;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 0.8rem;
-    align-items: center;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  #nav-menu.active {
-    display: block;
-  }
-
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-
-  .hero-text p {
-    font-size: 1rem;
-  }
-
-  .btn {
-    padding: 0.6rem 1.2rem;
+@media (max-width: 500px) {
+  .form input,
+  .form select,
+  .form textarea,
+  .button {
     font-size: 0.9rem;
-  }
-
-  .hero {
-    padding-top: 1rem;
-  }
-
-  main {
-    margin-top: 80px;
+    padding: 10px;
   }
 }
