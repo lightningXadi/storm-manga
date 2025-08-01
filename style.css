@@ -1,3 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background-color: #0a001a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ========== HEADER ========== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgba(20, 0, 40, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: #a855f7;
+  text-shadow: 0 0 15px #a855f7;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav ul li a {
+  color: #c084fc;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #d946ef;
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url("bp.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 5%;
+  z-index: 1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 0, 40, 0.1);
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  max-width: 600px;
+}
+
+.hero-text {
+  background: none;
+  padding: 0;
+  backdrop-filter: none;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  color: #c084fc;
+  text-shadow: 0 0 20px #c084fc;
+  line-height: 1.2;
+}
+
+.hero-text p {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 0 20px #9333ea;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #7c3aed;
+  box-shadow: 0 0 30px #a855f7;
+}
+
+/* ========== CARD STYLES (used on read.html) ========== */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #9333ea;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(147, 51, 234, 0.2);
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: #c084fc;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.card .manga-link {
+  display: inline-block;
+  color: #fff;
+  background: #7c3aed;
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.card .manga-link:hover {
+  background: #a855f7;
+  text-shadow: 0 0 10px #e879f9;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #140024;
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 3rem;
+}
+
+/* ========== PAGE LAYOUT ========== */
+main {
+  margin-top: 100px;
+  padding: 0 20px;
+}
+
+/* ========== TOGGLE BUTTON ========== */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  color: #a855f7;
+  cursor: pointer;
+}
 /* 🌌 Storm Realm Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
@@ -170,4 +365,54 @@ footer {
     margin: 20px;
     padding: 20px;
   }
-}  
+}
+
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    display: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  #nav-menu.active {
+    display: block;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    padding-top: 1rem;
+  }
+
+  main {
+    margin-top: 80px;
+  }
+}
