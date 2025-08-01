@@ -3,17 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Publish Manga</title>
+  <title>Publish Manga | Storm Realm</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="logo">⚡ Storm Realm</div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="read.html">Read</a></li>
-        <li><a href="publish.html">Publish</a></li>
+        <li><a class="active" href="publish.html">Publish</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><
+        <li><a href="shop.html">Shop</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Section -->
+  <main class="publish-section">
+    <h1>📖 Publish Your Manga</h1>
+    <p class="subtitle">Share your manga with the world through Storm Realm.</p>
+
+    <form class="publish-form">
+      <label for="title">Manga Title</label>
+      <input type="text" id="title" name="title" placeholder="Enter your manga title" required>
+
+      <label for="author">Author Name</label>
+      <input type="text" id="author" name="author" placeholder="Enter author name" required>
+
+      <label for="genre">Genre</label>
+      <select id="genre" name="genre">
+        <option>Action</option>
+        <option>Adventure</option>
+        <option>Fantasy</option>
+        <option>Romance</option>
+        <option>Horror</option>
+        <option>Sci-Fi</option>
+      </select>
+
+      <label for="cover">Upload Cover</label>
+      <input type="file" id="cover" name="cover" accept="image/*" required>
+
+      <label for="chapter">Upload Chapter (PDF/Images)</label>
+      <input type="file" id="chapter" name="chapter" accept=".pdf, image/*" multiple required>
+
+      <button type="submit">🚀 Publish Manga</button>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>⚡ Storm Realm © 2025 | All Rights Reserved</p>
+  </footer>
+</body>
+</html>
