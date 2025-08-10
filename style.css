@@ -379,14 +379,14 @@ footer {
   #nav-menu {
     position: fixed;
     top: 70px;
-    left: 12px;
-    right: 12px;
-    width: auto;
+    left: 50%;
+    right: auto;
+    width: min(480px, 90vw);
     height: auto;
-    max-height: 65vh;
+    max-height: 45vh; /* less than half screen */
     overflow-y: auto;
     display: block;
-    transform: translateY(-12px);
+    transform: translate(-50%, -12px);
     opacity: 0;
     pointer-events: none;
     transition: transform 0.25s ease, opacity 0.25s ease;
@@ -398,6 +398,7 @@ footer {
     padding: 12px 16px;
     z-index: 80;
     margin-top: 0; /* override previous spacing */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   }
 
   #nav-menu ul {
@@ -412,7 +413,7 @@ footer {
 
   /* When active, show the dropdown */
   #nav-menu.active {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
     opacity: 1;
     pointer-events: auto;
   }
