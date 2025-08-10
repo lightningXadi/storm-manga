@@ -1,11 +1,39 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  // Hamburger Menu Toggle (unchanged)
+  // Hamburger Menu Toggle (updated)
   const menuToggle = document.getElementById('menu-toggle');
   const navMenu = document.getElementById('nav-menu');
   if (menuToggle && navMenu) {
+    const closeMenu = () => {
+      navMenu.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      menuToggle.textContent = '☰';
+    };
+
+    const openMenu = () => {
+      navMenu.classList.add('active');
+      document.body.classList.add('menu-open');
+      menuToggle.textContent = '✕';
+    };
+
     menuToggle.addEventListener('click', function () {
-      navMenu.classList.toggle('active');
-      menuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+      const willOpen = !navMenu.classList.contains('active');
+      if (willOpen) openMenu();
+      else closeMenu();
+    });
+
+    // Close menu when clicking a nav link
+    navMenu.querySelectorAll('a').forEach((anchor) => {
+      anchor.addEventListener('click', () => closeMenu());
+    });
+
+    // Close menu on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // Close if resizing to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMenu();
     });
   }
 
