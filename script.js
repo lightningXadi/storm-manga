@@ -1,22 +1,23 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  // Hamburger Menu Toggle (updated)
+  // Hamburger Menu Toggle (updated to expand header)
   const menuToggle = document.getElementById('menu-toggle');
   const navMenu = document.getElementById('nav-menu');
-  if (menuToggle && navMenu) {
+  const headerEl = document.querySelector('header');
+  if (menuToggle && navMenu && headerEl) {
     const closeMenu = () => {
-      navMenu.classList.remove('active');
+      headerEl.classList.remove('expanded');
       document.body.classList.remove('menu-open');
       menuToggle.textContent = '☰';
     };
 
     const openMenu = () => {
-      navMenu.classList.add('active');
+      headerEl.classList.add('expanded');
       document.body.classList.add('menu-open');
       menuToggle.textContent = '✕';
     };
 
     menuToggle.addEventListener('click', function () {
-      const willOpen = !navMenu.classList.contains('active');
+      const willOpen = !headerEl.classList.contains('expanded');
       if (willOpen) openMenu();
       else closeMenu();
     });

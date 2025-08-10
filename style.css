@@ -372,50 +372,55 @@ footer {
 @media (max-width: 768px) {
   header {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 72px; /* collapsed height */
   }
 
-  /* Mobile dropdown (glassmorphism) */
+  header.expanded {
+    max-height: 70vh; /* enough to show all nav items */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    background: rgba(20, 0, 40, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Mobile dropdown becomes inline inside header */
   #nav-menu {
-    position: fixed;
-    top: 70px;
-    left: 50%;
-    right: auto;
-    width: min(480px, 90vw);
+    position: static;
+    width: 100%;
     height: auto;
-    max-height: 45vh; /* less than half screen */
-    overflow-y: auto;
+    max-height: none;
+    overflow: visible;
     display: block;
-    transform: translate(-50%, -12px);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-    background: rgba(20, 0, 40, 0.55);
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    padding: 12px 16px;
-    z-index: 80;
-    margin-top: 0; /* override previous spacing */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    opacity: 1; /* controlled on UL for stagger effect */
+    transform: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 8px 0 0 0;
+    margin-top: 4px;
+    box-shadow: none;
   }
 
   #nav-menu ul {
     flex-direction: column;
     gap: 0.6rem;
     align-items: stretch;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  header.expanded #nav-menu ul {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .menu-toggle {
     display: block;
-  }
-
-  /* When active, show the dropdown */
-  #nav-menu.active {
-    transform: translate(-50%, 0);
-    opacity: 1;
-    pointer-events: auto;
+    align-self: flex-end;
   }
 
   /* Prevent background scroll when menu is open */
